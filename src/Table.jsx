@@ -26,8 +26,8 @@ export default class Table extends Component {
         this.handleClick = this.handleClick.bind(this);
         this.getRowHtml = this.getRowHtml.bind(this);
         this.state = {
-            istextBox: false,
-            sortElement: null
+            sortElement: null,
+            method: true
         }
     }
 
@@ -49,10 +49,12 @@ export default class Table extends Component {
                     return 1;
                 }
 
-                // names must be equal
                 return 0;
             });
-            rowData = newSortedData
+            rowData = newSortedData;
+            if (this.state.method == false) {
+                rowData.reverse();
+            }
         }
 
         rowData.forEach(Element => {
@@ -71,19 +73,20 @@ export default class Table extends Component {
     }
 
     handleClick(sortElement) {
-        // let tableRows = this.getRowHtml(sortElement);
-        this.setState({
-            sortElement: sortElement
-        })
+        if (sortElement == this.state.sortElement) {
+            this.setState({
+                method: !this.state.method
+            })
+        }
+        else {
+            this.setState({
+                sortElement: sortElement
+            })
+        }
     }
     render() {
         let tableHtml = this.getRowHtml();
-        // if (this.state.sortElement) {
-        //     tableHtml = this.getRowHtml
-        // }
-        // else {
-        //     tableHtml = this.getRowHtml(this.state.sortElement);
-        // }
+
 
         return (
             <table className="striped">
