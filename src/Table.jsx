@@ -4,18 +4,18 @@ import Cell from "./Cell"
 var rowData = [
     {
         name: "A",
-        sname: "Eclair",
-        price: "$0.87"
+        sname: "Oreo",
+        price: "1"
     },
     {
         name: "D",
-        sname: "Eclair",
-        price: "$0.87"
+        sname: "Dairy Milk",
+        price: "6"
     },
     {
         name: "c",
-        sname: "Eclair",
-        price: "$0.87"
+        sname: "Kitkat",
+        price: "3"
     }
 ]
 
@@ -35,10 +35,13 @@ export default class Table extends Component {
     getRowHtml() {
         let mappedData = [];
         let newSortedData = [];
-        if (this.state.sortElement != null) {
+
+        if (this.state.sortElement) {
+            var that = this;
             newSortedData = rowData.sort(function (a, b) {
-                var nameA = a.name.toUpperCase(); // ignore upper and lowercase
-                var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+                var sortElement = that.state.sortElement;
+                let nameA = a[sortElement].toUpperCase(); // ignore upper and lowercase
+                let nameB = b[sortElement].toUpperCase(); // ignore upper and lowercase
                 if (nameA < nameB) {
                     return -1;
                 }
@@ -61,7 +64,7 @@ export default class Table extends Component {
             }
 
             mappedData.push(
-                <tr>{cellData}</tr>
+                <tr key={Math.random()}>{cellData}</tr>
             )
         })
         return (mappedData)
@@ -74,7 +77,7 @@ export default class Table extends Component {
         })
     }
     render() {
-        let tableHtml=this.getRowHtml();
+        let tableHtml = this.getRowHtml();
         // if (this.state.sortElement) {
         //     tableHtml = this.getRowHtml
         // }
@@ -87,8 +90,8 @@ export default class Table extends Component {
                 <thead>
                     <tr>
                         <th onClick={() => this.handleClick("name")}> <i class="material-icons">swap_vert</i>Name</th>
-                        <th><i class="material-icons">swap_vert</i>Item Name</th>
-                        <th> <i class="material-icons">swap_vert</i>Item Price</th>
+                        <th onClick={() => this.handleClick("sname")}><i class="material-icons">swap_vert</i>Item Name</th>
+                        <th onClick={() => this.handleClick("price")}> <i class="material-icons">swap_vert</i>Item Price</th>
                     </tr>
                 </thead>
 
